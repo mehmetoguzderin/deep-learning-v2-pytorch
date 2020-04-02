@@ -80,21 +80,22 @@ class NeuralNetwork(object):
         #### Implement the backward pass here ####
         ### Backward pass ###
 
-        # TODO: Output error - Replace this value with your calculations.
-        error = None # Output layer error is the difference between desired target and actual output.
+        # Output error
+        error = y - final_outputs # Output layer error is the difference between desired target and actual output.
         
-        # TODO: Calculate the hidden layer's contribution to the error
-        hidden_error = None
+        # Backpropagated output error term
+        output_error_term = error * self.activation_function_prime_cached(final_outputs)
         
-        # TODO: Backpropagated error terms - Replace these values with your calculations.
-        output_error_term = None
+        # Calculate the hidden layer's contribution to the error
+        hidden_error = np.dot(output_error_term, weights_hidden_output)
         
-        hidden_error_term = None
+        # Backpropagated hidden error term
+        hidden_error_term = hidden_error * self.activation_function_prime_cached(hidden_outputs)
         
         # Weight step (input to hidden)
-        delta_weights_i_h += None
+        delta_weights_i_h += hidden_error_term * X[:, None]
         # Weight step (hidden to output)
-        delta_weights_h_o += None
+        delta_weights_h_o += output_error_term * hidden_output
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records):
