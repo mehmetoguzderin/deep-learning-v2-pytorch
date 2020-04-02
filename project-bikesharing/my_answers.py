@@ -90,12 +90,12 @@ class NeuralNetwork(object):
         hidden_error = output_error_term * self.weights_hidden_to_output
         
         # Backpropagated hidden error term
-        hidden_error_term = hidden_error * self.activation_function_prime_cached(hidden_outputs)
+        hidden_error_term = hidden_error * self.activation_function_prime_cached(hidden_outputs)[:, None]
         
         # Weight step (input to hidden)
         delta_weights_i_h += hidden_error_term * X[:, None]
         # Weight step (hidden to output)
-        delta_weights_h_o += output_error_term * hidden_output[:, None]
+        delta_weights_h_o += output_error_term * hidden_outputs[:, None]
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records):
