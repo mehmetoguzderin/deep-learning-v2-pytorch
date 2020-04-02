@@ -87,7 +87,7 @@ class NeuralNetwork(object):
         output_error_term = error * self.activation_function_prime_cached(final_outputs)
         
         # Calculate the hidden layer's contribution to the error
-        hidden_error = np.dot(output_error_term, self.weights_hidden_output)
+        hidden_error = np.dot(output_error_term, self.weights_hidden_to_output)
         
         # Backpropagated hidden error term
         hidden_error_term = hidden_error * self.activation_function_prime_cached(hidden_outputs)
